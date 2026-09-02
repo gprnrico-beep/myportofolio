@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from pathlib import Path
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "sultoni-rico51-myportofolio.pws.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "sultoni-rico51-myportofolio.pws.cs.ui.ac.id", "*"]
 
 PRODUCTION = os.getenv('PRODUCTION', 'False').lower() == 'true'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
