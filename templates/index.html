@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Menghubungkan ke static/style.css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header class="site-header">
@@ -15,22 +17,26 @@
             <a href="#profile" class="brand">Sultoni Rico Sabillilah</a>
             <nav>
                 <a href="#profile">Profile</a>
+                <a href="#about-details">About</a>
+                <a href="#projects">Projects</a>
             </nav>
         </div>
     </header>
+
     <main>
+        <!-- Profile / Hero Section -->
         <section class="hero" id="profile">
             <div class="container hero-grid">
                 <div class="hero-identity">
-                    <p class="hero-kicker">System Information &middot; Universitas Indonesia</p>
+                    <p class="hero-kicker">Sistem Informasi &middot; Universitas Indonesia</p>
                     <h1>Sultoni Rico Sabillilah</h1>
                 </div>
                 <div class="hero-photo">
                     <div class="photo-block"></div>
-                    <img class="avatar" src="/static/img/me.jpeg" alt="Photo of Sultoni Rico Sabillilah">
+                    <img class="avatar" src="{% static 'img/me.jpeg' %}" alt="Foto Sultoni Rico Sabillilah">
                 </div>
                 <div class="hero-details">
-                    <p class="bio">CS student at Universitas Indonesia for longer than planned, now a familiar (and slightly dreaded) face among Fasilkom students as a teaching assistant across several courses.</p>
+                    <p class="bio">Mahasiswa Sistem Informasi Universitas Indonesia yang tertarik pada pengembangan perangkat lunak, analisis data, dan solusi bisnis berbasis teknologi.</p>
                     <dl class="meta-list">
                         <div class="meta-row">
                             <dt>NPM</dt>
@@ -42,14 +48,106 @@
                         </div>
                     </dl>
                     <div class="social-links">
-                        <a href="https://github.com/gprnrico-beep" class="social-link">GitHub</a>
-                        <a href="https://www.linkedin.com/in/sultoni-rico-sabillilah-35b126374/" class="social-link">LinkedIn</a>
+                        <a href="https://github.com/gprnrico-beep" class="social-link" target="_blank">GitHub</a>
+                        <a href="https://www.linkedin.com/in/sultoni-rico-sabillilah-35b126374/" class="social-link" target="_blank">LinkedIn</a>
                         <a href="mailto:gprn.rico@gmail.com" class="social-link">Email</a>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Pendidikan, Pengalaman & Keterampilan -->
+        <section class="portfolio-details" id="about-details">
+            <div class="container details-grid">
+                
+                <!-- Kolom Kiri: Pendidikan & Pengalaman -->
+                <div class="details-column">
+                    <!-- Pendidikan -->
+                    <article class="info-card">
+                        <h2 class="section-title">Pendidikan</h2>
+                        <div class="info-item">
+                            <h3>S1 Sistem Informasi</h3>
+                            <p class="info-subtitle">Fakultas Ilmu Komputer, Universitas Indonesia</p>
+                        </div>
+                    </article>
+
+                    <!-- Pengalaman -->
+                    <article class="info-card">
+                        <h2 class="section-title">Pengalaman</h2>
+                        <ul class="simple-list">
+                            <li>
+                                <strong>Private Teacher</strong>
+                                <p>Mengajar dan membimbing siswa dalam pemahaman materi akademis serta pengembangan logika berpikir.</p>
+                            </li>
+                            <li>
+                                <strong>Kompetisi Penulisan Artikel</strong>
+                                <p>Berpartisipasi aktif dalam ajang perlombaan penulisan artikel ilmiah dan gagasan kritis.</p>
+                            </li>
+                        </ul>
+                    </article>
+                </div>
+
+                <!-- Kolom Kanan: Keterampilan -->
+                <div class="details-column">
+                    <article class="info-card">
+                        <h2 class="section-title">Keterampilan</h2>
+                        
+                        <div class="skill-group">
+                            <h3>Teknikal (Hard Skills)</h3>
+                            <div class="tags-wrapper">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Java</span>
+                                <span class="skill-tag">HTML</span>
+                                <span class="skill-tag">CSS</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group" style="margin-top: 1.5rem;">
+                            <h3>Non-Teknikal (Soft Skills)</h3>
+                            <div class="tags-wrapper">
+                                <span class="skill-tag soft">Public Speaking</span>
+                                <span class="skill-tag soft">Problem Solving</span>
+                                <span class="skill-tag soft">Manajemen Waktu</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Proyek Section -->
+        <section class="projects-section" id="projects">
+            <div class="container">
+                <h2 class="section-title">Proyek & Bisnis Plan</h2>
+                <div class="projects-grid">
+                    
+                    <!-- Proyek 1: NuMate -->
+                    <article class="project-card">
+                        <span class="project-tag">Business & Product</span>
+                        <h3>NuMate App</h3>
+                        <p>Aplikasi pelacak gizi makanan, pengatur rencana makan harian, dan asisten pemesanan bahan makanan berbasis kebutuhan gizi harian pengguna.</p>
+                    </article>
+
+                    <!-- Proyek 2: Web Portfolio -->
+                    <article class="project-card">
+                        <span class="project-tag">Web Development</span>
+                        <h3>Personal Portfolio Website</h3>
+                        <p>Situs web portofolio pribadi yang dibangun menggunakan Django, HTML5, CSS3 kustom, dan dideploy ke Pacil Web Service (PWS).</p>
+                    </article>
+
+                    <!-- Proyek 3: Pemrograman Java & Python -->
+                    <article class="project-card">
+                        <span class="project-tag">Software Development</span>
+                        <h3>Eksplorasi Program Java & Python</h3>
+                        <p>Implementasi berbagai proyek latihan pemrograman menggunakan prinsip Object-Oriented Programming (OOP) dan struktur data dasar.</p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
     </main>
+
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2026 Sultoni Rico Sabillilah. Fakultas Ilmu Komputer, Universitas Indonesia.</p>

@@ -24,7 +24,7 @@ body {
     line-height: 1.6;
 }
 
-h1, .brand {
+h1, .brand, .section-title {
     font-family: "Space Grotesk", -apple-system, sans-serif;
 }
 
@@ -34,9 +34,7 @@ h1, .brand {
     padding: 0 1.5rem;
 }
 
-/* ==========================================================================
-   Header & Navigasi (Flexbox Layout)
-   ========================================================================== */
+/* Header & Navigasi */
 .site-header {
     border-bottom: 1px solid var(--line);
 }
@@ -71,9 +69,7 @@ h1, .brand {
     color: var(--accent);
 }
 
-/* ==========================================================================
-   Hero Section (Profile) - CSS Grid Layout
-   ========================================================================== */
+/* Hero Section */
 .hero {
     padding: 4.5rem 0 5rem;
 }
@@ -87,13 +83,9 @@ h1, .brand {
     gap: 1.5rem 3rem;
 }
 
-.hero-identity {
-    grid-area: identity;
-}
-
-.hero-details {
-    grid-area: details;
-}
+.hero-identity { grid-area: identity; }
+.hero-details { grid-area: details; }
+.hero-photo { grid-area: photo; align-self: center; position: relative; }
 
 .hero-kicker {
     font-size: 0.85rem;
@@ -105,8 +97,8 @@ h1, .brand {
 }
 
 .hero-identity h1 {
-    font-size: clamp(3rem, 7vw, 5rem);
-    line-height: 0.95;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.05;
 }
 
 .bio {
@@ -155,12 +147,6 @@ h1, .brand {
     background-color: var(--accent);
 }
 
-.hero-photo {
-    grid-area: photo;
-    align-self: center;
-    position: relative;
-}
-
 .photo-block {
     position: absolute;
     top: 1.25rem;
@@ -183,27 +169,158 @@ h1, .brand {
     border: 3px solid var(--ink);
 }
 
-/* ==========================================================================
-   Footer
-   ========================================================================== */
+/* Pendidikan, Pengalaman & Keterampilan */
+.portfolio-details {
+    padding: 3rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.info-card {
+    background-color: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--ink);
+}
+
+.info-item h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.info-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.simple-list {
+    list-style: none;
+    padding: 0;
+}
+
+.simple-list li {
+    margin-bottom: 1rem;
+}
+
+.simple-list li:last-child {
+    margin-bottom: 0;
+}
+
+.simple-list p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.skill-group h3 {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tags-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius);
+}
+
+.skill-tag.soft {
+    border-color: var(--accent);
+    color: var(--accent-dark);
+}
+
+/* Proyek Section */
+.projects-section {
+    padding: 3rem 0 4rem;
+    border-top: 1px solid var(--line);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    background-color: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(28, 25, 23, 0.08);
+}
+
+.project-tag {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-dark);
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+}
+
+.project-card h3 {
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+}
+
+.project-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Footer */
 .site-footer {
-    margin-top: 4rem;
     padding: 2rem 0;
     border-top: 1px solid var(--line);
     text-align: center;
     color: var(--text-muted);
-    font-size: 0.875rem;
-}
-/* ==========================================================================
-   Footer & Responsive Layout
-   ========================================================================== */
-.site-footer {
-    padding: 1.5rem;
-    color: var(--text-muted);
     font-size: 0.85rem;
-    border-top: 1px solid var(--line);
 }
 
+/* Responsive (Mobile View) */
 @media (max-width: 600px) {
     .hero-grid {
         grid-template-columns: 1fr;
@@ -217,7 +334,7 @@ h1, .brand {
         max-width: 220px;
     }
 
-    .social-links {
-        justify-content: flex-start;
+    .details-grid {
+        grid-template-columns: 1fr;
     }
 }
