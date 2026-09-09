@@ -16,9 +16,8 @@
         <div class="container">
             <a href="#profile" class="brand">Sultoni Rico Sabillilah</a>
             <nav>
-                <a href="#profile">Profile</a>
-                <a href="#about-details">About</a>
-                <a href="#projects">Projects</a>
+                <a href="{% url 'main:show_main' %}">Profile</a>
+                <a href="{% url 'main:show_experience' %}">Experience</a>
             </nav>
         </div>
     </header>
@@ -72,19 +71,7 @@
                     </article>
 
                     <!-- Pengalaman -->
-                    <article class="info-card">
-                        <h2 class="section-title">Pengalaman</h2>
-                        <ul class="simple-list">
-                            <li>
-                                <strong>Private Teacher</strong>
-                                <p>Mengajar dan membimbing siswa dalam pemahaman materi akademis serta pengembangan logika berpikir.</p>
-                            </li>
-                            <li>
-                                <strong>Kompetisi Penulisan Artikel</strong>
-                                <p>Berpartisipasi aktif dalam ajang perlombaan penulisan artikel ilmiah dan gagasan kritis.</p>
-                            </li>
-                        </ul>
-                    </article>
+
                 </div>
 
                 <!-- Kolom Kanan: Keterampilan -->
