@@ -120,3 +120,7 @@ sftp-config.json
 
 # macOS
 .DS_Store
+
+.env*
+db.sqlite3
+env/
