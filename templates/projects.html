@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experience - {{ name }}</title>
+    <title>Proyek & Bisnis Plan - {{ name }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -24,20 +24,21 @@
 
     <main class="container" style="margin-top: 3rem; margin-bottom: 3rem;">
         <section class="projects-section">
-            <h2 class="section-title">Experience</h2>
+            <h2 class="section-title">Daftar Proyek & Bisnis Plan</h2>
             
-            {% if experience_list %}
+            {% if projects %}
                 <div class="projects-grid">
-                    {% for exp in experience_list %}
+                    {% for project in projects %}
                         <article class="project-card">
-                            <h3>{{ exp.title }}</h3>
-                            <p>{{ exp.description }}</p>
+                            <span class="project-tag">{{ project.category }}</span>
+                            <h3>{{ project.title }}</h3>
+                            <p>{{ project.description }}</p>
                         </article>
                     {% endfor %}
                 </div>
             {% else %}
                 <div class="empty-state" style="text-align: center; padding: 3rem; border: 2px dashed #ccc; border-radius: 8px;">
-                    <p>Belum ada pengalaman yang ditambahkan.</p>
+                    <p>Belum ada data proyek yang ditambahkan.</p>
                 </div>
             {% endif %}
         </section>

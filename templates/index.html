@@ -8,16 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <!-- Menghubungkan ke static/style.css -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="#profile" class="brand">Sultoni Rico Sabillilah</a>
+            <a href="{% url 'main:show_main' %}" class="brand">Sultoni Rico Sabillilah</a>
             <nav>
                 <a href="{% url 'main:show_main' %}">Profile</a>
                 <a href="{% url 'main:show_experience' %}">Experience</a>
+                <a href="{% url 'main:show_projects' %}">Projects</a>
             </nav>
         </div>
     </header>
@@ -55,13 +55,12 @@
             </div>
         </section>
 
-        <!-- Pendidikan, Pengalaman & Keterampilan -->
+        <!-- Pendidikan & Keterampilan Section -->
         <section class="portfolio-details" id="about-details">
             <div class="container details-grid">
                 
-                <!-- Kolom Kiri: Pendidikan & Pengalaman -->
+                <!-- Pendidikan -->
                 <div class="details-column">
-                    <!-- Pendidikan -->
                     <article class="info-card">
                         <h2 class="section-title">Pendidikan</h2>
                         <div class="info-item">
@@ -69,12 +68,9 @@
                             <p class="info-subtitle">Fakultas Ilmu Komputer, Universitas Indonesia</p>
                         </div>
                     </article>
-
-                    <!-- Pengalaman -->
-
                 </div>
 
-                <!-- Kolom Kanan: Keterampilan -->
+                <!-- Keterampilan -->
                 <div class="details-column">
                     <article class="info-card">
                         <h2 class="section-title">Keterampilan</h2>
@@ -86,6 +82,7 @@
                                 <span class="skill-tag">Java</span>
                                 <span class="skill-tag">HTML</span>
                                 <span class="skill-tag">CSS</span>
+                                <span class="skill-tag">Django</span>
                             </div>
                         </div>
 
@@ -103,33 +100,14 @@
             </div>
         </section>
 
-        <!-- Proyek Section -->
-        <section class="projects-section" id="projects">
-            <div class="container">
-                <h2 class="section-title">Proyek & Bisnis Plan</h2>
-                <div class="projects-grid">
-                    
-                    <!-- Proyek 1: NuMate -->
-                    <article class="project-card">
-                        <span class="project-tag">Business & Product</span>
-                        <h3>NuMate App</h3>
-                        <p>Aplikasi pelacak gizi makanan, pengatur rencana makan harian, dan asisten pemesanan bahan makanan berbasis kebutuhan gizi harian pengguna.</p>
-                    </article>
-
-                    <!-- Proyek 2: Web Portfolio -->
-                    <article class="project-card">
-                        <span class="project-tag">Web Development</span>
-                        <h3>Personal Portfolio Website</h3>
-                        <p>Situs web portofolio pribadi yang dibangun menggunakan Django, HTML5, CSS3 kustom, dan dideploy ke Pacil Web Service (PWS).</p>
-                    </article>
-
-                    <!-- Proyek 3: Pemrograman Java & Python -->
-                    <article class="project-card">
-                        <span class="project-tag">Software Development</span>
-                        <h3>Eksplorasi Program Java & Python</h3>
-                        <p>Implementasi berbagai proyek latihan pemrograman menggunakan prinsip Object-Oriented Programming (OOP) dan struktur data dasar.</p>
-                    </article>
-
+        <!-- Quick Navigation Callout -->
+        <section class="projects-section">
+            <div class="container" style="text-align: center; padding: 2rem 0;">
+                <h2 class="section-title">Jelajahi Portofolio</h2>
+                <p style="margin-bottom: 1.5rem;">Lihat rekam jejak pengalaman dan proyek yang telah saya kembangkan.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="{% url 'main:show_experience' %}" class="social-link" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #2563eb; color: white; border-radius: 8px; text-decoration: none;">Lihat Experience &rarr;</a>
+                    <a href="{% url 'main:show_projects' %}" class="social-link" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #2563eb; color: white; border-radius: 8px; text-decoration: none;">Lihat Projects &rarr;</a>
                 </div>
             </div>
         </section>
