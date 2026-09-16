@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block meta %}
+    <title>Add New Projects - {{ name }}</title>
+{% endblock meta %}
+
+{% block content %}
+<main class="container" style="margin-top: 3rem; margin-bottom: 3rem; max-width: 800px;">
+    <section class="experience-section">
+        <p style="color: #c2410c; font-weight: bold; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.25rem;">
+            TAMBAHKAN PROJECT BARUMU!
+        </p>
+        <h1 style="font-size: 2.25rem; font-weight: 700; margin-top: 0; margin-bottom: 2rem;">
+            Add New Projects
+        </h1>
+
+        <form method="post" action="{% url 'main:create_project' %}" class="project-form">
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label for="{{ field.id_for_label }}" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1f2937;">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p class="form-error" style="color: #dc2626; font-size: 0.875rem; margin-top: 0.25rem;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <div style="margin-top: 2rem; display: flex; gap: 0.75rem;">
+                <button type="submit" class="button" style="background-color: #d97706; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; font-weight: 600; cursor: pointer;">
+                    Tambah Project
+                </button>
+                <a href="{% url 'main:show_projects' %}" class="button button-secondary" style="background-color: #1f2937; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; text-decoration: none; font-size: 0.9rem; font-weight: 600; display: inline-block;">
+                    Batal
+                </a>
+            </div>
+        </form>
+    </section>
+</main>
+{% endblock content %}

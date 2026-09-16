@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta %}
+    <title>Portfolio - Sultoni Rico Sabillilah</title>
+    {% endblock meta %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0;">
+            <a href="{% url 'main:show_main' %}" class="brand" style="font-weight: bold; font-size: 1.2rem; text-decoration: none; color: inherit;">Sultoni Rico Sabillilah</a>
+            <nav style="display: flex; gap: 1.5rem;">
+                <a href="{% url 'main:show_main' %}" style="text-decoration: none; color: inherit;">Profile</a>
+                <a href="{% url 'main:show_experience' %}" style="text-decoration: none; color: inherit;">Experience</a>
+                <a href="{% url 'main:show_projects' %}" style="text-decoration: none; color: inherit;">Projects</a>
+            </nav>
+        </div>
+    </header>
+
+    {% block content %}
+    {% endblock content %}
+
+    <footer class="site-footer" style="margin-top: 3rem; padding: 2rem 0; border-top: 1px solid #e5e7eb; text-align: center;">
+        <div class="container">
+            <p>&copy; 2026 Sultoni Rico Sabillilah. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+        </div>
+    </footer>
+</body>
+</html>
