@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="project-search__container" style="max-width: 600px; margin: 40px auto; padding: 20px;">
+    <h2 style="margin-bottom: 20px; color: #fff;">{{ title_page }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            {% for field in form %}
+                <div style="display: flex; flex-direction: column; text-align: left;">
+                    <label for="{{ field.id_for_label }}" style="color: #ccc; margin-bottom: 5px; font-weight: bold;">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div style="color: #ff4d4d; font-size: 0.85rem; margin-top: 4px;">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button type="submit" class="project-search__button" style="flex: 1; cursor: pointer;">
+                    Simpan
+                </button>
+                <a href="{% url 'main:show_experience' %}" class="project-search__button" style="background-color: #6c757d; text-decoration: none; text-align: center; flex: 1;">
+                    Batal
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

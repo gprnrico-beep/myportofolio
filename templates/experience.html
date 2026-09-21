@@ -1,52 +1,51 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experience - {{ name }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <header class="site-header">
-        <div class="container">
-            <a href="{% url 'main:show_main' %}" class="brand">Sultoni Rico Sabillilah</a>
-            <nav>
-                <a href="{% url 'main:show_main' %}">Profile</a>
-                <a href="{% url 'main:show_experience' %}">Experience</a>
-                <a href="{% url 'main:show_projects' %}">Projects</a>
-            </nav>
-        </div>
-    </header>
+{% extends 'base.html' %}
 
-    <main class="container" style="margin-top: 3rem; margin-bottom: 3rem;">
-        <section class="projects-section">
-            <h2 class="section-title">Experience</h2>
-            
-            {% if experience_list %}
-                <div class="projects-grid">
-                    {% for exp in experience_list %}
-                        <article class="project-card">
-                            <h3>{{ exp.title }}</h3>
-                            <p>{{ exp.description }}</p>
-                        </article>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div class="empty-state" style="text-align: center; padding: 3rem; border: 2px dashed #ccc; border-radius: 8px;">
-                    <p>Belum ada pengalaman yang ditambahkan.</p>
-                </div>
-            {% endif %}
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Sultoni Rico Sabillilah. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+{% block content %}
+<main class="container" style="margin-top: 3rem; margin-bottom: 3rem;">
+    <section class="projects-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2 class="section-title" style="margin: 0;">Experience</h2>
+            <a href="{% url 'main:create_experience' %}" class="project-search__button" style="text-decoration: none;">
+                + Tambah Pengalaman
+            </a>
         </div>
-    </footer>
-</body>
-</html>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div style="padding: 12px; margin-bottom: 20px; border-radius: 6px; background-color: #198754; color: white;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% if experience_list %}
+            <div class="projects-grid">
+                {% for exp in experience_list %}
+                    <article class="project-card">
+                        <h3>{{ exp.title }}</h3>
+                        <p style="font-weight: bold; color: #888; margin-bottom: 8px;">{{ exp.get_category_display }}</p>
+                        <p>{{ exp.description }}</p>
+
+                        <div style="display: flex; gap: 8px; margin-top: 15px;">
+                            <a href="{% url 'main:update_experience' exp.id %}" class="project-search__button" style="background-color: #ffc107; color: #000; text-decoration: none; padding: 6px 12px; font-size: 0.85rem;">
+                                Edit
+                            </a>
+                            
+                            <form method="POST" action="{% url 'main:delete_experience' exp.id %}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengalaman ini?');" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="project-search__button" style="background-color: #dc3545; padding: 6px 12px; font-size: 0.85rem; cursor: pointer;">
+                                    Hapus
+                                </button>
+                            </form>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state" style="text-align: center; padding: 3rem; border: 2px dashed #ccc; border-radius: 8px;">
+                <p>Belum ada pengalaman yang ditambahkan.</p>
+            </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

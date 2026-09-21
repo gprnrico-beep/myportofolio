@@ -1,5 +1,39 @@
-from django.forms import ModelForm, TextInput, Textarea
-from main.models import Project
+from django.forms import ModelForm, TextInput, Textarea, Select
+from main.models import Experience, Project
+
+class ExperienceForm(ModelForm):
+    class Meta:
+        model = Experience
+        fields = [
+            "title",
+            "category",
+            "description",
+        ]
+        labels = {
+            "title": "Judul Pengalaman",
+            "category": "Kategori",
+            "description": "Deskripsi Pengalaman",
+        }
+        widgets = {
+            "title": TextInput(
+                attrs={
+                    "placeholder": "misal: Staff SOSPRO",
+                    "maxlength": 255,
+                }
+            ),
+            "category": Select(
+                choices=Experience.EXPERIENCE_CHOICES,
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Saya berperan di divisi logistik...",
+                    "rows": 4,
+                }
+            ),
+        }
 
 class ProjectForm(ModelForm):
     class Meta:
@@ -10,26 +44,26 @@ class ProjectForm(ModelForm):
             "description",
         ]
         labels = {
-            "title": "Nama Proyek",
-            "category": "Kategori Proyek",
+            "title": "Judul Proyek",
+            "category": "Kategori",
             "description": "Deskripsi Proyek",
         }
         widgets = {
             "title": TextInput(
                 attrs={
-                    "placeholder": "misal: NuMate - AI Grocery App",
+                    "placeholder": "misal: Aplikasi Web NuMate",
                     "maxlength": 255,
                 }
             ),
             "category": TextInput(
                 attrs={
-                    "placeholder": "misal: Web Development / Machine Learning",
+                    "placeholder": "misal: Web Development",
                     "maxlength": 100,
                 }
             ),
             "description": Textarea(
                 attrs={
-                    "placeholder": "Jelaskan proyek yang kamu buat...",
+                    "placeholder": "Deskripsi singkat mengenai proyek...",
                     "rows": 4,
                 }
             ),
