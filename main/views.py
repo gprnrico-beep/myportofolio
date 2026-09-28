@@ -101,6 +101,9 @@ def get_projects_json(request):
     )
     return HttpResponse(projects_json, content_type="application/json")
 
+def is_editor(user):
+    return user.is_authenticated and user.groups.filter(name="Editor").exists()
+
 def show_projects(request):
     json_response = get_projects_json(request)
     deserialized_projects = serializers.deserialize(
@@ -113,6 +116,7 @@ def show_projects(request):
         "name": "Sultoni Rico Sabillilah",
         "project_list": projects,
         "title_query": title_query,
+        "is_editor": is_editor(request.user),
     }
     return render(request, "projects.html", context)
 
@@ -131,6 +135,27 @@ def create_project(request):
         "name": "Sultoni Rico Sabillilah",
         "form": form,
     }
+    return render(request, "projects_form.html", context)
+
+@login_required(login_url="/login/")
+def update_project(request, project_id):
+    if not request.user.is_superuser and not is_editor(request.user):
+        raise PermissionDenied
+
+    project = get_object_or_404(Project, pk=project_id)
+    form = ProjectForm(request.POST or None, instance=project)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Proyek berhasil diperbarui!")
+        return redirect("main:show_projects")
+
+    context = {
+        "name": "Sultoni Rico Sabillilah",
+        "form": form,
+        "project": project,
+    }
+
     return render(request, "projects_form.html", context)
 
 @login_required(login_url="/login/")

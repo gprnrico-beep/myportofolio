@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block meta %}
-    <title>Add New Projects - {{ name }}</title>
+    <title>{% if project %}Edit Project{% else %}Add New Projects{% endif %} - {{ name }}</title>
 {% endblock meta %}
 
 {% block content %}
@@ -12,10 +12,12 @@
             TAMBAHKAN PROJECT BARUMU!
         </p>
         <h1 style="font-size: 2.25rem; font-weight: 700; margin-top: 0; margin-bottom: 2rem;">
-            Add New Projects
+            {% if project %}Edit Project{% else %}Add New Projects{% endif %}
         </h1>
 
-        <form method="post" action="{% url 'main:create_project' %}" class="project-form">
+        <form method="post"
+            action="{% if project %}{% url 'main:update_project' project.id %}{% else %}{% url 'main:create_project' %}{% endif %}"
+            class="project-form">
             {% csrf_token %}
             
             {% for field in form %}
@@ -32,7 +34,7 @@
 
             <div style="margin-top: 2rem; display: flex; gap: 0.75rem;">
                 <button type="submit" class="button" style="background-color: #d97706; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; font-weight: 600; cursor: pointer;">
-                    Tambah Project
+                    {% if project %}Simpan Perubahan{% else %}Tambah Project{% endif %}
                 </button>
                 <a href="{% url 'main:show_projects' %}" class="button button-secondary" style="background-color: #1f2937; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; text-decoration: none; font-size: 0.9rem; font-weight: 600; display: inline-block;">
                     Batal
