@@ -11,11 +11,13 @@
                 <p class="section-kicker">Karya yang saya bangun</p>
                 <div class="project-header">
                     <h1>Projects</h1>
-                    <a href="{% url 'main:create_project' %}"
-                       class="button project-add-button">
-                        <span aria-hidden="true">+</span>
-                        Tambah Proyek
-                    </a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'main:create_project' %}" 
+                            class="button project-add-button"> 
+                            <span aria-hidden="true">+</span> 
+                            Tambah Proyek 
+                        </a>
+                    {% endif %}
                 </div>
                 <form method="get"
                       action="{% url 'main:show_projects' %}"
@@ -35,8 +37,12 @@
                             <span class="experience-category">{{ project.category }}</span>
                             <p class="experience-description">{{ project.description }}</p>
                             <div class="project-card-actions">
+                                {% include "components/project_star.html" with project=project %}
+
                                 <div class="project-actions">
-                                    {% include "components/project_delete_modal.html" with project=project %}
+                                    {% if user.is_superuser %}
+                                        {% include "components/project_delete_modal.html" with project=project %}
+                                    {% endif %}
                                 </div>
                             </div>
                         </article>

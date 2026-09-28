@@ -17,6 +17,13 @@
                 <a href="{% url 'main:show_main' %}" style="text-decoration: none; color: inherit;">Profile</a>
                 <a href="{% url 'main:show_experience' %}" style="text-decoration: none; color: inherit;">Experience</a>
                 <a href="{% url 'main:show_projects' %}" style="text-decoration: none; color: inherit;">Projects</a>
+                {% if user.is_authenticated %}
+                    <span class="nav-user">{{ user.username }}</span>
+                    <a href="{% url 'main:logout' %}" style="text-decoration: none; color: inherit;">Logout</a>
+                {% else %}
+                    <a href="{% url 'main:login' %}" style="text-decoration: none; color: inherit;">Login</a>
+                    <a href="{% url 'main:register' %}" style="text-decoration: none; color: inherit;">Register</a>
+                {% endif %}
             </nav>
         </div>
     </header>

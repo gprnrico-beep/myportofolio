@@ -1,27 +1,14 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% block meta %}
     <title>Sultoni Rico Sabillilah - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <header class="site-header">
-        <div class="container">
-            <a href="{% url 'main:show_main' %}" class="brand">Sultoni Rico Sabillilah</a>
-            <nav>
-                <a href="{% url 'main:show_main' %}">Profile</a>
-                <a href="{% url 'main:show_experience' %}">Experience</a>
-                <a href="{% url 'main:show_projects' %}">Projects</a>
-            </nav>
-        </div>
-    </header>
+{% endblock meta %}
 
+{% block content %}
     <main>
         <!-- Profile / Hero Section -->
         <section class="hero" id="profile">
@@ -30,26 +17,53 @@
                     <p class="hero-kicker">Sistem Informasi &middot; Universitas Indonesia</p>
                     <h1>Sultoni Rico Sabillilah</h1>
                 </div>
+
                 <div class="hero-photo">
                     <div class="photo-block"></div>
                     <img class="avatar" src="{% static 'img/me.jpeg' %}" alt="Foto Sultoni Rico Sabillilah">
                 </div>
+
                 <div class="hero-details">
-                    <p class="bio">Mahasiswa Sistem Informasi Universitas Indonesia yang tertarik pada pengembangan perangkat lunak, analisis data, dan solusi bisnis berbasis teknologi.</p>
+                    <p class="bio">
+                        Mahasiswa Sistem Informasi Universitas Indonesia yang tertarik pada
+                        pengembangan perangkat lunak, analisis data, dan solusi bisnis
+                        berbasis teknologi.
+                    </p>
+
                     <dl class="meta-list">
                         <div class="meta-row">
                             <dt>NPM</dt>
-                            <dd>2506657365</dd>
+                            <dd>{{ npm }}</dd>
                         </div>
+
                         <div class="meta-row">
                             <dt>Program</dt>
-                            <dd>S1 Sistem Informasi</dd>
+                            <dd>{{ study_program }}</dd>
+                        </div>
+
+                        <div class="meta-row">
+                            <dt>Sesi Terakhir Login</dt>
+                            <dd>{{ last_login }}</dd>
                         </div>
                     </dl>
+
                     <div class="social-links">
-                        <a href="https://github.com/gprnrico-beep" class="social-link" target="_blank">GitHub</a>
-                        <a href="https://www.linkedin.com/in/sultoni-rico-sabillilah-35b126374/" class="social-link" target="_blank">LinkedIn</a>
-                        <a href="mailto:gprn.rico@gmail.com" class="social-link">Email</a>
+                        <a href="https://github.com/gprnrico-beep"
+                           class="social-link"
+                           target="_blank">
+                            GitHub
+                        </a>
+
+                        <a href="https://www.linkedin.com/in/sultoni-rico-sabillilah-35b126374/"
+                           class="social-link"
+                           target="_blank">
+                            LinkedIn
+                        </a>
+
+                        <a href="mailto:gprn.rico@gmail.com"
+                           class="social-link">
+                            Email
+                        </a>
                     </div>
                 </div>
             </div>
@@ -58,14 +72,17 @@
         <!-- Pendidikan & Keterampilan Section -->
         <section class="portfolio-details" id="about-details">
             <div class="container details-grid">
-                
+
                 <!-- Pendidikan -->
                 <div class="details-column">
                     <article class="info-card">
                         <h2 class="section-title">Pendidikan</h2>
+
                         <div class="info-item">
                             <h3>S1 Sistem Informasi</h3>
-                            <p class="info-subtitle">Fakultas Ilmu Komputer, Universitas Indonesia</p>
+                            <p class="info-subtitle">
+                                Fakultas Ilmu Komputer, Universitas Indonesia
+                            </p>
                         </div>
                     </article>
                 </div>
@@ -74,9 +91,10 @@
                 <div class="details-column">
                     <article class="info-card">
                         <h2 class="section-title">Keterampilan</h2>
-                        
+
                         <div class="skill-group">
                             <h3>Teknikal (Hard Skills)</h3>
+
                             <div class="tags-wrapper">
                                 <span class="skill-tag">Python</span>
                                 <span class="skill-tag">Java</span>
@@ -88,6 +106,7 @@
 
                         <div class="skill-group" style="margin-top: 1.5rem;">
                             <h3>Non-Teknikal (Soft Skills)</h3>
+
                             <div class="tags-wrapper">
                                 <span class="skill-tag soft">Public Speaking</span>
                                 <span class="skill-tag soft">Problem Solving</span>
@@ -104,19 +123,25 @@
         <section class="projects-section">
             <div class="container" style="text-align: center; padding: 2rem 0;">
                 <h2 class="section-title">Jelajahi Portofolio</h2>
-                <p style="margin-bottom: 1.5rem;">Lihat rekam jejak pengalaman dan proyek yang telah saya kembangkan.</p>
+
+                <p style="margin-bottom: 1.5rem;">
+                    Lihat rekam jejak pengalaman dan proyek yang telah saya kembangkan.
+                </p>
+
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="{% url 'main:show_experience' %}" class="social-link" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #2563eb; color: white; border-radius: 8px; text-decoration: none;">Lihat Experience &rarr;</a>
-                    <a href="{% url 'main:show_projects' %}" class="social-link" style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #2563eb; color: white; border-radius: 8px; text-decoration: none;">Lihat Projects &rarr;</a>
+                    <a href="{% url 'main:show_experience' %}"
+                       class="social-link"
+                       style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #2563eb; color: white; border-radius: 8px; text-decoration: none;">
+                        Lihat Experience &rarr;
+                    </a>
+
+                    <a href="{% url 'main:show_projects' %}"
+                       class="social-link"
+                       style="display: inline-block; padding: 0.75rem 1.5rem; background-color: #2563eb; color: white; border-radius: 8px; text-decoration: none;">
+                        Lihat Projects &rarr;
+                    </a>
                 </div>
             </div>
         </section>
     </main>
-
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Sultoni Rico Sabillilah. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
-        </div>
-    </footer>
-</body>
-</html>
+{% endblock content %}
