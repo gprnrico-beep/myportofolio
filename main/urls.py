@@ -15,12 +15,18 @@ from main.views import (
     login_user,
     logout_user,
     toggle_star,
+    create_project_ajax,
 )
 
 app_name = 'main'
 
 urlpatterns = [
     path('', show_main, name='show_main'),
+    path(
+    "projects/add-ajax/",
+    create_project_ajax,
+    name="create_project_ajax",
+    ),
     
     #Authentication
     path('register/', register, name='register'),

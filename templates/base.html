@@ -36,5 +36,17 @@
             <p>&copy; 2026 Sultoni Rico Sabillilah. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
         </div>
     </footer>
+    {% include 'components/toast.html' %}
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                showToast(
+                    "Notifikasi",
+                    "{{ message|escapejs }}",
+                    "{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}normal{% endif %}"
+                );
+            </script>
+        {% endfor %}
+    {% endif %}
 </body>
 </html>
