@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block meta %}
@@ -9,30 +10,40 @@
         <section class="experience-section" id="experience">
             <div class="container">
                 <p class="section-kicker">Karya yang saya bangun</p>
+
                 <div class="project-header">
-                    <button class="button button-secondary" onclick="showToast('Notifikasi Sistem', 'Project berhasil dimuat dengan baik!', 'success')">
+                    <button
+                        class="button button-secondary"
+                        onclick="showToast('Notifikasi Sistem', 'Project berhasil dimuat dengan baik!', 'success')">
                         Test Toast Notifikasi
                     </button>
+
                     <h1>Projects</h1>
+
                     {% if user.is_superuser %}
-                        <button type="button"
-                                class="button project-add-button"
-                                popovertarget="add-project-modal">
+                        <button
+                            type="button"
+                            class="button project-add-button"
+                            popovertarget="add-project-modal">
                             <span aria-hidden="true">+</span>
                             Tambah Proyek
                         </button>
                     {% endif %}
                 </div>
+
                 <form id="project-search-form" class="project-search">
-                    <input type="search"
+                    <input
+                        type="search"
                         id="search-input"
                         name="title"
                         value="{{ title_query }}"
                         placeholder="Cari berdasarkan nama proyek"
                         class="project-search__input"
                         aria-label="Cari berdasarkan nama proyek">
+
                     <button type="submit" class="button">Cari</button>
                 </form>
+
                 <!-- Loading State -->
                 <div id="loading" class="empty-state hide">
                     <p>Memuat projects...</p>
@@ -53,12 +64,18 @@
             </div>
         </section>
     </main>
+
     {% if user.is_superuser %}
         {% include "components/project_form_modal.html" %}
     {% endif %}
+
     <script>
-        const BASE_PROJECTS_ENDPOINT = "{% url 'main:get_projects_json' %}";
-        const CREATE_PROJECT_ENDPOINT = "{% url 'main:create_project_ajax' %}";
+        // ==========================================
+        // API CONFIGURATION
+        // ==========================================
+
+        const BASE_PROJECTS_ENDPOINT = "/api/v1/projects/";
+        const CREATE_PROJECT_ENDPOINT = "/api/v1/projects/";
 
         const loadingElement = document.getElementById("loading");
         const errorElement = document.getElementById("error");
@@ -68,25 +85,41 @@
         const searchForm = document.getElementById("project-search-form");
         const searchInput = document.getElementById("search-input");
         const projectForm = document.getElementById("project-form");
+
         const SEARCH_DEBOUNCE_DELAY = 300;
+
         let searchDebounceTimer;
 
-        function displayPageSection(section) {
-        loadingElement.classList.add("hide");
-        errorElement.classList.add("hide");
-        emptyElement.classList.add("hide");
-        gridElement.classList.add("hide");
 
-        if (section === "loading") {
-            loadingElement.classList.remove("hide");
-        } else if (section === "error") {
-            errorElement.classList.remove("hide");
-        } else if (section === "empty") {
-            emptyElement.classList.remove("hide");
-        } else if (section === "grid") {
-            gridElement.classList.remove("hide");
+        // ==========================================
+        // DISPLAY PAGE SECTION
+        // ==========================================
+
+        function displayPageSection(section) {
+            loadingElement.classList.add("hide");
+            errorElement.classList.add("hide");
+            emptyElement.classList.add("hide");
+            gridElement.classList.add("hide");
+
+            if (section === "loading") {
+                loadingElement.classList.remove("hide");
+
+            } else if (section === "error") {
+                errorElement.classList.remove("hide");
+
+            } else if (section === "empty") {
+                emptyElement.classList.remove("hide");
+
+            } else if (section === "grid") {
+                gridElement.classList.remove("hide");
+            }
         }
-    }
+
+
+        // ==========================================
+        // HTML ESCAPE
+        // ==========================================
+
         function escapeHtml(value) {
             return String(value ?? "")
                 .replaceAll("&", "&amp;")
@@ -97,169 +130,242 @@
         }
 
 
-        function buildProjectCardElement(project) {
-            const fields = project.fields;
+        // ==========================================
+        // BUILD PROJECT CARD
+        // ==========================================
 
+        function buildProjectCardElement(project) {
             const card = document.createElement("article");
+
             card.className = "experience-card project-card";
+
+            const starredBy = Array.isArray(project.starred_by_names)
+                ? project.starred_by_names.join(", ")
+                : "";
 
             card.innerHTML = `
                 <div class="project-card__content">
-                    <h2>${escapeHtml(fields.title)}</h2>
+
+                    <h2>${escapeHtml(project.title)}</h2>
 
                     <p>
-                        <strong>Kategori:</strong> ${escapeHtml(fields.category)}
+                        <strong>Kategori:</strong>
+                        ${escapeHtml(project.category)}
                     </p>
 
-                    <p>${escapeHtml(fields.description)}</p>
+                    <p>
+                        ${escapeHtml(project.description)}
+                    </p>
 
                     <p>
-                        <strong>Star:</strong> ${escapeHtml(fields.star_count)}
+                        <strong>Star:</strong>
+                        ${escapeHtml(project.star_count)}
                     </p>
 
                     ${
-                        fields.starred_by_names
+                        starredBy
                         ? `<p>
                             <strong>Starred by:</strong>
-                            ${escapeHtml(fields.starred_by_names)}
+                            ${escapeHtml(starredBy)}
                         </p>`
                         : ""
-                    }   
+                    }
+
                 </div>
             `;
 
             return card;
         }
-    async function fetchProjects(title = "") {
-        displayPageSection("loading");
 
-        try {
-            const url = new URL(BASE_PROJECTS_ENDPOINT, window.location.origin);
 
-            if (title) {
-                url.searchParams.set("title", title);
+        // ==========================================
+        // FETCH PROJECTS FROM DRF API
+        // ==========================================
+
+        async function fetchProjects(title = "") {
+            displayPageSection("loading");
+
+            try {
+                const url = new URL(
+                    BASE_PROJECTS_ENDPOINT,
+                    window.location.origin
+                );
+
+                if (title) {
+                    url.searchParams.set("title", title);
+                }
+
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error("Gagal mengambil data projects.");
+                }
+
+                const projects = await response.json();
+
+                gridElement.innerHTML = "";
+
+                if (projects.length === 0) {
+                    displayPageSection("empty");
+                    return;
+                }
+
+                projects.forEach((project) => {
+                    const card = buildProjectCardElement(project);
+
+                    gridElement.appendChild(card);
+                });
+
+                displayPageSection("grid");
+
+            } catch (error) {
+                console.error(error);
+
+                displayPageSection("error");
             }
-
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error("Gagal mengambil data projects.");
-            }
-
-            const projects = await response.json();
-
-            gridElement.innerHTML = "";
-
-            if (projects.length === 0) {
-                displayPageSection("empty");
-                return;
-            }
-
-            projects.forEach((project) => {
-                const card = buildProjectCardElement(project);
-                gridElement.appendChild(card);
-            });
-
-            displayPageSection("grid");
-
-        } catch (error) {
-            console.error(error);
-            displayPageSection("error");
         }
-    }
 
-    function getCookie(name) {
-        const cookies = document.cookie.split(";");
 
-        for (const cookie of cookies) {
-            const [key, value] = cookie.trim().split("=");
+        // ==========================================
+        // CSRF COOKIE
+        // ==========================================
 
-            if (key === name) {
-                return decodeURIComponent(value);
+        function getCookie(name) {
+            const cookies = document.cookie.split(";");
+
+            for (const cookie of cookies) {
+                const [key, value] = cookie.trim().split("=");
+
+                if (key === name) {
+                    return decodeURIComponent(value);
+                }
             }
+
+            return null;
         }
 
-        return null;
-    }
-    async function addProject(event) {
-        event.preventDefault();
 
-        const formData = new FormData(projectForm);
+        // ==========================================
+        // ADD PROJECT USING DRF API
+        // ==========================================
 
-        try {
-            const response = await fetch(CREATE_PROJECT_ENDPOINT, {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": getCookie("csrftoken"),
-                },
-                body: formData,
-            });
+        async function addProject(event) {
+            event.preventDefault();
 
-            const data = await response.json();
+            const formData = new FormData(projectForm);
 
-            if (!response.ok) {
-                console.error(data);
+            const projectData = {
+                title: formData.get("title"),
+                category: formData.get("category"),
+                description: formData.get("description")
+            };
+
+            try {
+                const response = await fetch(CREATE_PROJECT_ENDPOINT, {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie("csrftoken")
+                    },
+
+                    body: JSON.stringify(projectData)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    console.error(data);
+
+                    showToast(
+                        "Gagal",
+                        "Proyek gagal ditambahkan. Periksa kembali data yang dimasukkan.",
+                        "error"
+                    );
+
+                    return;
+                }
+
                 showToast(
-                    "Gagal",
-                    "Proyek gagal ditambahkan. Periksa kembali data yang dimasukkan.",
+                    "Berhasil",
+                    "Proyek berhasil ditambahkan!",
+                    "success"
+                );
+
+                projectForm.reset();
+
+                document
+                    .getElementById("add-project-modal")
+                    .hidePopover();
+
+                fetchProjects(searchInput.value.trim());
+
+            } catch (error) {
+                console.error(error);
+
+                showToast(
+                    "Error",
+                    "Terjadi kesalahan saat menambahkan proyek.",
                     "error"
                 );
-                return;
             }
-
-            showToast(
-                "Berhasil",
-                data.message,
-                "success"
-            );
-
-            projectForm.reset();
-            document.getElementById("add-project-modal").hidePopover();
-
-            fetchProjects(searchInput.value.trim());
-
-        } catch (error) {
-            console.error(error);
-
-            showToast(
-                "Error",
-                "Terjadi kesalahan saat menambahkan proyek.",
-                "error"
-            );
         }
-    }
-    if (projectForm) {
-        projectForm.addEventListener("submit", addProject);
-    }
 
-    function searchProjects() {
-        fetchProjects(searchInput.value.trim());
-    }
 
-    searchInput.addEventListener("input", function () {
-        clearTimeout(searchDebounceTimer);
+        // ==========================================
+        // PROJECT FORM EVENT
+        // ==========================================
 
-        searchDebounceTimer = setTimeout(function () {
+        if (projectForm) {
+            projectForm.addEventListener("submit", addProject);
+        }
+
+
+        // ==========================================
+        // SEARCH PROJECTS
+        // ==========================================
+
+        function searchProjects() {
+            fetchProjects(searchInput.value.trim());
+        }
+
+        searchInput.addEventListener("input", function () {
+            clearTimeout(searchDebounceTimer);
+
+            searchDebounceTimer = setTimeout(function () {
+                searchProjects();
+            }, SEARCH_DEBOUNCE_DELAY);
+        });
+
+        searchForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            clearTimeout(searchDebounceTimer);
+
             searchProjects();
-        }, SEARCH_DEBOUNCE_DELAY);
-    });
+        });
 
-    searchForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        clearTimeout(searchDebounceTimer);
-        searchProjects();
-    });
 
-        
-    
+        // ==========================================
+        // INITIAL LOAD
+        // ==========================================
 
-    fetchProjects(searchInput.value.trim());
+        fetchProjects(searchInput.value.trim());
+
+
+        // ==========================================
+        // BROWSER HISTORY
+        // ==========================================
+
         window.addEventListener("popstate", function () {
-        const url = new URL(window.location.href);
-        const title = url.searchParams.get("title") || "";
+            const url = new URL(window.location.href);
 
-        searchInput.value = title;
-        fetchProjects(title);
-    });
+            const title = url.searchParams.get("title") || "";
+
+            searchInput.value = title;
+
+            fetchProjects(title);
+        });
+
     </script>
 {% endblock content %}
